@@ -2,14 +2,16 @@ import java.util.Arrays;
 
 public class PoorCode {
 
+	private static double[] theNums;
+
 	public static void main(String[] args) {
 		
 		x("Mr", "Sergey", "Ovchinnik");
 		
 		System.out.println();
 		
-		int[] arr = new int[] {5, 8, 3, 4, 2, 9, 6};
-		System.out.println("Top even is " + locateTopEven(arr));
+		int[] theNums = new int[] {5, 8, 3, 4, 2, 9, 6};
+		System.out.println("Top even is " + locateTopEven(theNums));
 		
 		System.out.println();
 		
@@ -26,12 +28,14 @@ public class PoorCode {
 		System.out.println("evaluateConditions(true, false, 1) = " + evaluateConditions(true, false, 1));
 		System.out.println("evaluateConditions(true, true, 1) = " + evaluateConditions(true, true, 1));
 		
-		System.out.println();
+		getLength();
+		sumArray();
+		getMean();
+		getMedian();
+		getMode();
+		getVariance();
+		getStandardDeviation();
 		
-		double[] arr2 = new double[] {3.0, 4.0, 3.5, 4.0, 6.0, 5.0, 5.5, 6.6, 6.1};
-		printStats(arr2);
-		
-		System.out.println();
 		
 		System.out.println(intArrayToString(new int[] {1, 2, 3, 4, 5}));
 		
@@ -97,25 +101,43 @@ return indexOfTopEven;}
 	}
 	
 	
-	public static void printStats(double[] arr) {
+	//Input and store array
+	
+	
+	
+	public static double getLength() {
 		
-		double length = (double) arr.length;
+		
+		//get length
+		double length = (double) theNums.length;
 		
 		System.out.println("Length = " + length);
-		
+		return length;
+	}
+	
+	public static double sumArray() {
+		//sum up array
 		double sum = 0.0;
-		for(int i = 0; i < arr.length; i++)
-			sum += arr[i];
+		for(int i = 0; i < theNums.length; i++)
+			sum += theNums[i];
 		
 		System.out.println("Sum = " + sum);
+		return sum;
+	}
+	
+	public static double getMean() {
+		//get mean
+		double n = (double) theNums.length;
 		
-		double n = (double) arr.length;
-		
-		double mean = sum / n;
+		double mean = sumArray() / n; //use sum from sum array
 		
 		System.out.println("Mean = " + mean);
-		
-		double[] sorted = b(arr);
+		return mean;
+	}
+	
+	public static double getMedian() {
+		//get median
+		double[] sorted = sortArray(theNums);
 		
 		double median;
 		
@@ -125,6 +147,13 @@ return indexOfTopEven;}
 			median = (sorted[sorted.length/2 - 1] + sorted[sorted.length/2]) / 2.0;
 		
 		System.out.println("Median = " + median);
+		return median;
+	}
+	
+	//get mode
+	public static double getMode() {
+		
+		double[] sorted = sortArray(theNums);
 		
 		double mode = sorted[0];
 		int topOccurrences = 0;
@@ -146,24 +175,42 @@ return indexOfTopEven;}
 		}
 		
 		System.out.println("Mode = " + mode);
-		
+		return mode;
+	}
+	public static double getVariance() {
+		//Get variance
 		double variance = 0.0;
 		
-		for(int i = 0; i < arr.length; i++) {
-			double diff = arr[i] - mean;
+		for(int i = 0; i < theNums.length; i++) {
+			double diff = theNums[i] - getMean();
 			variance += diff * diff;
 		}
-		variance /= length;
+		variance /= getLength();
+		
+		System.out.println("Variance = " + variance);
+		return variance;
+	}
+	
+	public static double getStandardDeviation() {
+		//get standard deviation
+		double variance = 0.0;
+		
+		for(int i = 0; i < theNums.length; i++) {
+			double diff = theNums[i] - getMean();
+			variance += diff * diff;
+		}
+		
+		variance /= getLength();
 		
 		System.out.println("Variance = " + variance);
 		
 		double standardDeviation = Math.sqrt(variance);
 		
 		System.out.println("Standard Deviation = " + standardDeviation);
-		
+		return standardDeviation;
 	}
 	
-	public static double[] b(double[] arr) {
+	public static double[] sortArray(double[] arr) {
 		double[] sortingArr = Arrays.copyOf(arr, arr.length);
 		for(int i = 0; i < sortingArr.length - 1; i++)
 			for(int j = i + 1; j < sortingArr.length; j++)
